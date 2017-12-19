@@ -47,7 +47,7 @@ module vgaBitChange(
 	
 	
 	always@ (*) // paint a white box on a red background
-    if (~bright)
+    	if (~bright)
 		rgb = BLACK; // force black if not bright
 	 else if (greenMiddleSquare == 1)
 		rgb = GREEN;
@@ -71,36 +71,20 @@ module vgaBitChange(
 			end
 		end
 
-/*	always@ (posedge clk)	
-	if (greenMiddleSquareSpeed >= 50'd500000000)
-	begin
-		greenMiddleSquareY = greenMiddleSquareY + 10'd1;
-		greenMiddleSquareSpeed = 50'd0;
-		if (greenMiddleSquareY == 10'd779)
-			begin
-			greenMiddleSquareY = 10'd0;
-			end
-	else 
-		begin
-		greenMiddleSquareSpeed = greenMiddleSquareSpeed + 50'd1;
-		end
-	end*/
-
 	always@ (*)
-	if ((reset == 1'b0) && (button == 1'b1) && (hCount >= 10'd144) && (hCount <= 10'd784) && (greenMiddleSquareY >= 10'd400) && (greenMiddleSquareY <= 10'd475))
-		begin
-		score[3:0] = score[3:0] + 16'd1;
-		reset = 1'b1;
-		end
-	else if (greenMiddleSquareY <= 10'd20)
-		begin
-		reset = 1'b0;
-		end
+		if ((reset == 1'b0) && (button == 1'b1) && (hCount >= 10'd144) && (hCount <= 10'd784) && (greenMiddleSquareY >= 10'd400) && (greenMiddleSquareY <= 10'd475))
+			begin
+			score[3:0] = score[3:0] + 16'd1;
+			reset = 1'b1;
+			end
+		else if (greenMiddleSquareY <= 10'd20)
+			begin
+			reset = 1'b0;
+			end
 
-	assign whiteZone = ((hCount >= 10'd144) && (hCount <= 10'd784)) &&
-				((vCount >= 10'd400) && (vCount <= 10'd475)) ? 1 : 0;
+	assign whiteZone = ((hCount >= 10'd144) && (hCount <= 10'd784)) && ((vCount >= 10'd400) && (vCount <= 10'd475)) ? 1 : 0;
 
 	assign greenMiddleSquare = ((hCount >= 10'd340) && (hCount < 10'd380)) &&
-				((vCount >= greenMiddleSquareY) && (vCount <= greenMiddleSquareY + 10'd40)) ? 1 : 0;
+				   ((vCount >= greenMiddleSquareY) && (vCount <= greenMiddleSquareY + 10'd40)) ? 1 : 0;
 	
 endmodule
